@@ -6,8 +6,9 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
-  basePath: process.env.NODE_ENV === 'production' ? '/marketing-sales-analytics' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/marketing-sales-analytics' : '',
+  // GitHub Pages uses repository name as base path
+  basePath: process.env.GITHUB_ACTIONS ? '/marketing-sales-analytics' : '',
+  assetPrefix: process.env.GITHUB_ACTIONS ? '/marketing-sales-analytics' : '',
 }
 
 module.exports = nextConfig
