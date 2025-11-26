@@ -7,8 +7,8 @@ const nextConfig = {
   },
   trailingSlash: true,
   // GitHub Pages uses repository name as base path
-  basePath: process.env.GITHUB_ACTIONS ? '/marketing-sales-analytics' : '',
-  assetPrefix: process.env.GITHUB_ACTIONS ? '/marketing-sales-analytics' : '',
+  basePath: '/marketing-sales-analytics',
+  assetPrefix: '/marketing-sales-analytics',
 }
 
 module.exports = nextConfig
