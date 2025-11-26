@@ -9,9 +9,13 @@ frontend:
         - npm ci --no-optional --production=false
     build:
       commands:
-        - echo "Building Next.js application..."
+        - echo "Building Next.js static export..."
         - AMPLIFY=true npm run build
         - echo "Build completed successfully!"
+        - echo "Creating required-server-files.json for Amplify..."
+        - echo '{"version":3,"routes":[],"dynamicRoutes":[],"dataRoutes":[],"i18n":{}}' > out/required-server-files.json
+        - echo "Verifying build output..."
+        - ls -la out/
   artifacts:
     baseDirectory: out
     files:
