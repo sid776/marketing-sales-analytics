@@ -11,6 +11,7 @@ export default function Home() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [sampleData, setSampleData] = useState<any>(null)
 
+  // For GitHub Pages, use environment variable or default to localhost for development
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
   useEffect(() => {
