@@ -20,12 +20,17 @@ app = FastAPI(title="Marketing & Sales Analytics API")
 cors_origins = [
     "http://localhost:3000",
     "http://localhost:5173",
-    os.getenv("FRONTEND_URL", ""),  # Add your production frontend URL
+    "https://sid776.github.io",  # GitHub Pages
+    os.getenv("FRONTEND_URL", ""),  # Add your production frontend URL from environment
 ]
+
+# Allow all Amplify domains (using regex)
+cors_origin_regex = r"https://.*\.amplifyapp\.com"
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[origin for origin in cors_origins if origin],  # Filter out empty strings
+    allow_origin_regex=cors_origin_regex,  # Allow all Amplify subdomains
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
