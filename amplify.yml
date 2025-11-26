@@ -16,13 +16,16 @@ frontend:
         - echo "Build completed successfully!"
         - echo "Creating Amplify required files for static export..."
         - echo '{"version":3,"routes":[],"dynamicRoutes":[],"dataRoutes":[],"i18n":{}}' > out/required-server-files.json
+        - echo "Copying .next build directory to out for Amplify..."
+        - if [ -d ".next" ]; then cp -r .next out/ 2>/dev/null || true; fi
+        - echo "Ensuring trace files exist..."
         - mkdir -p out/.next/server
-        - echo '' > out/.next/server/trace
-        - echo '' > out/.next/trace
-        - echo "Created trace files for Amplify compatibility"
-        - echo "Verifying build output structure..."
-        - ls -la out/.next/ 2>/dev/null || echo "No .next directory"
-        - ls -la out/.next/server/ 2>/dev/null || echo "No server directory"
+        - if [ ! -f "out/.next/server/trace" ]; then echo '[]' > out/.next/server/trace; fi
+        - if [ ! -f "out/.next/trace" ]; then echo '[]' > out/.next/trace; fi
+        - echo "Verifying required files..."
+        - ls -la out/required-server-files.json
+        - ls -la out/.next/server/trace 2>/dev/null || echo "Warning: server trace not found"
+        - ls -la out/.next/trace 2>/dev/null || echo "Warning: trace not found"
   artifacts:
     baseDirectory: out
     files:
