@@ -3,6 +3,8 @@ frontend:
   phases:
     preBuild:
       commands:
+        - echo "Using Node.js version..."
+        - node --version
         - echo "Clearing npm cache..."
         - npm cache clean --force
         - echo "Installing dependencies..."
@@ -12,10 +14,15 @@ frontend:
         - echo "Building Next.js static export..."
         - AMPLIFY=true npm run build
         - echo "Build completed successfully!"
-        - echo "Creating required-server-files.json for Amplify..."
+        - echo "Creating Amplify required files for static export..."
         - echo '{"version":3,"routes":[],"dynamicRoutes":[],"dataRoutes":[],"i18n":{}}' > out/required-server-files.json
-        - echo "Verifying build output..."
-        - ls -la out/
+        - mkdir -p out/.next/server
+        - echo '' > out/.next/server/trace
+        - echo '' > out/.next/trace
+        - echo "Created trace files for Amplify compatibility"
+        - echo "Verifying build output structure..."
+        - ls -la out/.next/ 2>/dev/null || echo "No .next directory"
+        - ls -la out/.next/server/ 2>/dev/null || echo "No server directory"
   artifacts:
     baseDirectory: out
     files:
