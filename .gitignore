@@ -51,6 +51,8 @@ pip-delete-this-directory.txt
 *.egg-info/
 dist/
 build/
+backend/__pycache__/
+backend/**/__pycache__/
 
 # IDE
 .vscode/
