@@ -3,18 +3,10 @@ frontend:
   phases:
     preBuild:
       commands:
-        # Install pnpm globally
-        - npm install -g pnpm@latest
-        # Verify pnpm installation
-        - pnpm --version
-        # Install dependencies
-        - pnpm install --frozen-lockfile
+        - npm install
     build:
       commands:
-        # Set environment variable for Railway backend
-        - echo "Building with API URL: $NEXT_PUBLIC_API_URL"
-        # Build Next.js app with static export
-        - pnpm run build
+        - npm run build
   artifacts:
     baseDirectory: out
     files:
@@ -23,4 +15,3 @@ frontend:
     paths:
       - node_modules/**/*
       - .next/cache/**/*
-      - .pnpm-store/**/*
