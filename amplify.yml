@@ -6,6 +6,7 @@ frontend:
         - npm install
     build:
       commands:
+        - export AMPLIFY=true
         - npm run build
   artifacts:
     baseDirectory: out
