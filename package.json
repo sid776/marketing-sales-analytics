@@ -9,6 +9,7 @@
     "lint": "next lint",
     "export": "next build"
   },
+  "homepage": "https://sid776.github.io/marketing-sales-analytics",
   "dependencies": {
     "next": "14.2.5",
     "react": "18.3.1",
