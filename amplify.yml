@@ -3,11 +3,15 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm install
+        - echo "Clearing npm cache..."
+        - npm cache clean --force
+        - echo "Installing dependencies..."
+        - npm ci --no-optional --production=false
     build:
       commands:
-        - export AMPLIFY=true
-        - npm run build
+        - echo "Building Next.js application..."
+        - AMPLIFY=true npm run build
+        - echo "Build completed successfully!"
   artifacts:
     baseDirectory: out
     files:
@@ -16,3 +20,4 @@ frontend:
     paths:
       - node_modules/**/*
       - .next/cache/**/*
+      - .npm-cache/**/*

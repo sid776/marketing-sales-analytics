@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 // Support both GitHub Pages (with basePath) and Amplify (without basePath)
-const isAmplify = process.env.AMPLIFY === 'true' || process.env.AWS_AMPLIFY === 'true'
+const isAmplify = process.env.AMPLIFY === 'true' || 
+                  process.env.AWS_AMPLIFY === 'true' || 
+                  process.env.AWS_EXECUTION_ENV !== undefined
 const isGitHubPages = process.env.GITHUB_ACTIONS === 'true'
 
 const nextConfig = {
