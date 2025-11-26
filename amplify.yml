@@ -3,29 +3,11 @@ frontend:
   phases:
     preBuild:
       commands:
-        - echo "Using Node.js version..."
-        - node --version
-        - echo "Clearing npm cache..."
-        - npm cache clean --force
-        - echo "Installing dependencies..."
-        - npm ci --no-optional --production=false
+        - npm ci
     build:
       commands:
-        - echo "Building Next.js static export..."
-        - AMPLIFY=true npm run build
-        - echo "Build completed successfully!"
-        - echo "Creating Amplify required files for static export..."
-        - echo '{"version":3,"routes":[],"dynamicRoutes":[],"dataRoutes":[],"i18n":{}}' > out/required-server-files.json
-        - echo "Copying .next build directory to out for Amplify..."
-        - if [ -d ".next" ]; then cp -r .next out/ 2>/dev/null || true; fi
-        - echo "Ensuring trace files exist..."
-        - mkdir -p out/.next/server
-        - if [ ! -f "out/.next/server/trace" ]; then echo '[]' > out/.next/server/trace; fi
-        - if [ ! -f "out/.next/trace" ]; then echo '[]' > out/.next/trace; fi
-        - echo "Verifying required files..."
-        - ls -la out/required-server-files.json
-        - ls -la out/.next/server/trace 2>/dev/null || echo "Warning: server trace not found"
-        - ls -la out/.next/trace 2>/dev/null || echo "Warning: trace not found"
+        - npm run build
+        - npm run export
   artifacts:
     baseDirectory: out
     files:
@@ -33,5 +15,3 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-      - .next/cache/**/*
-      - .npm-cache/**/*
