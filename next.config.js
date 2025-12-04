@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
+// Support both GitHub Pages (with basePath) and Amplify (without basePath)
+const isAmplify = process.env.AMPLIFY === 'true' || 
+                  process.env.AWS_AMPLIFY === 'true' || 
+                  process.env.AWS_EXECUTION_ENV !== undefined
+const isGitHubPages = process.env.GITHUB_ACTIONS === 'true'
+
 const nextConfig = {
   reactStrictMode: true,
   output: 'export',
@@ -6,9 +12,11 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
-  // GitHub Pages uses repository name as base path
-  basePath: '/marketing-sales-analytics',
-  assetPrefix: '/marketing-sales-analytics',
+  // Only use basePath for GitHub Pages, not for Amplify
+  ...(isGitHubPages && !isAmplify ? {
+    basePath: '/marketing-sales-analytics',
+    assetPrefix: '/marketing-sales-analytics',
+  } : {}),
 }
 
 module.exports = nextConfig

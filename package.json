@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "next build"
+    "export": "next export"
   },
   "homepage": "https://sid776.github.io/marketing-sales-analytics",
   "dependencies": {

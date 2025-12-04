@@ -28,17 +28,17 @@ export default function DLResults({ results }: DLResultsProps) {
     >
       <div className="flex items-center mb-4">
         <span className="text-3xl mr-3">🧠</span>
-        <h3 className="text-2xl font-bold text-white">DL Analysis</h3>
+        <h3 className="text-2xl font-bold text-gray-800">DL Analysis</h3>
       </div>
       
       <div className="mb-4">
-        <p className="text-white/80 text-sm mb-1">Model: {results.model}</p>
-        <p className="text-white/80 text-sm">{results.layers} layers, {results.neurons} neurons</p>
+        <p className="text-gray-700 text-sm mb-1">Model: {results.model}</p>
+        <p className="text-gray-700 text-sm">{results.layers} layers, {results.neurons} neurons</p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <h4 className="text-white font-semibold mb-2">Forecast Trends</h4>
+          <h4 className="text-gray-800 font-semibold mb-2">Forecast Trends</h4>
           <ResponsiveContainer width="100%" height={150}>
             <AreaChart data={results.forecasts}>
               <defs>
@@ -47,8 +47,8 @@ export default function DLResults({ results }: DLResultsProps) {
                   <stop offset="95%" stopColor="#38bdf8" stopOpacity={0}/>
                 </linearGradient>
               </defs>
-              <XAxis dataKey="quarter" stroke="#fff" style={{ fontSize: '10px' }} />
-              <YAxis stroke="#fff" style={{ fontSize: '10px' }} />
+              <XAxis dataKey="quarter" stroke="#374151" style={{ fontSize: '10px' }} />
+              <YAxis stroke="#374151" style={{ fontSize: '10px' }} />
               <Tooltip 
                 contentStyle={{ 
                   backgroundColor: 'rgba(0,0,0,0.8)', 
@@ -64,11 +64,11 @@ export default function DLResults({ results }: DLResultsProps) {
         </div>
 
         <div>
-          <h4 className="text-white font-semibold mb-2">Sentiment Analysis</h4>
+          <h4 className="text-gray-800 font-semibold mb-2">Sentiment Analysis</h4>
           <ResponsiveContainer width="100%" height={150}>
             <BarChart data={sentimentData} layout="vertical">
-              <XAxis type="number" stroke="#fff" style={{ fontSize: '10px' }} />
-              <YAxis dataKey="name" type="category" stroke="#fff" style={{ fontSize: '10px' }} width={60} />
+              <XAxis type="number" stroke="#374151" style={{ fontSize: '10px' }} />
+              <YAxis dataKey="name" type="category" stroke="#374151" style={{ fontSize: '10px' }} width={60} />
               <Tooltip 
                 contentStyle={{ 
                   backgroundColor: 'rgba(0,0,0,0.8)', 
@@ -84,12 +84,12 @@ export default function DLResults({ results }: DLResultsProps) {
         </div>
 
         <div>
-          <h4 className="text-white font-semibold mb-2">Pattern Strength</h4>
+          <h4 className="text-gray-800 font-semibold mb-2">Pattern Strength</h4>
           <ResponsiveContainer width="100%" height={150}>
             <RadarChart data={patternData}>
-              <PolarGrid stroke="rgba(255,255,255,0.3)" />
-              <PolarAngleAxis dataKey="pattern" stroke="#fff" style={{ fontSize: '10px' }} />
-              <PolarRadiusAxis angle={90} domain={[0, 100]} stroke="#fff" style={{ fontSize: '10px' }} />
+              <PolarGrid stroke="rgba(55, 65, 81, 0.3)" />
+              <PolarAngleAxis dataKey="pattern" stroke="#374151" style={{ fontSize: '10px' }} />
+              <PolarRadiusAxis angle={90} domain={[0, 100]} stroke="#374151" style={{ fontSize: '10px' }} />
               <Radar name="Strength" dataKey="strength" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.6} />
               <Tooltip 
                 contentStyle={{ 

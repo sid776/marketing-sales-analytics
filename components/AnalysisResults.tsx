@@ -1,18 +1,18 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import MLResults from './analysis/MLResults'
-import DLResults from './analysis/DLResults'
-import QuantumResults from './analysis/QuantumResults'
-import DataSummary from './analysis/DataSummary'
+import { motion } from "framer-motion";
+import MLResults from "./analysis/MLResults";
+import DLResults from "./analysis/DLResults";
+import QuantumResults from "./analysis/QuantumResults";
+import DataSummary from "./analysis/DataSummary";
 
 interface AnalysisResultsProps {
   results: {
-    ml: any
-    dl: any
-    quantum: any
-    rawData: any
-  }
+    ml: any;
+    dl: any;
+    quantum: any;
+    rawData: any;
+  };
 }
 
 export default function AnalysisResults({ results }: AnalysisResultsProps) {
@@ -24,10 +24,10 @@ export default function AnalysisResults({ results }: AnalysisResultsProps) {
       className="space-y-6"
     >
       <div className="text-center mb-8">
-        <h2 className="text-4xl font-bold text-white mb-2">
+        <h2 className="text-4xl font-bold text-gray-800 mb-2">
           Analysis Complete
         </h2>
-        <p className="text-white/80">
+        <p className="text-gray-700">
           Advanced algorithms have processed your data
         </p>
       </div>
@@ -40,6 +40,5 @@ export default function AnalysisResults({ results }: AnalysisResultsProps) {
         <QuantumResults results={results.quantum} />
       </div>
     </motion.div>
-  )
+  );
 }
-

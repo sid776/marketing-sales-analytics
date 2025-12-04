@@ -34,7 +34,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL || 'https://marketing-analytics-backend.onrender.com' }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL || 'https://marketing-analytics-backend-production.up.railway.app' }}
           GITHUB_ACTIONS: true
 
       - name: Setup Pages

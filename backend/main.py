@@ -21,13 +21,21 @@ cors_origins = [
     "http://localhost:3000",
     "http://localhost:5173",
     "https://sid776.github.io",  # GitHub Pages
+<<<<<<< HEAD
     "https://sid776.github.io/marketing-sales-analytics",  # GitHub Pages with path
     os.getenv("FRONTEND_URL", ""),  # Add your production frontend URL
+=======
+    os.getenv("FRONTEND_URL", ""),  # Add your production frontend URL from environment
+>>>>>>> 352258cc30ca1ff501036c3a0bda0e8debfe3955
 ]
+
+# Allow all Amplify domains (using regex)
+cors_origin_regex = r"https://.*\.amplifyapp\.com"
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[origin for origin in cors_origins if origin],  # Filter out empty strings
+    allow_origin_regex=cors_origin_regex,  # Allow all Amplify subdomains
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
