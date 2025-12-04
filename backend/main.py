@@ -20,6 +20,8 @@ app = FastAPI(title="Marketing & Sales Analytics API")
 cors_origins = [
     "http://localhost:3000",
     "http://localhost:5173",
+    "https://sid776.github.io",  # GitHub Pages
+    "https://sid776.github.io/marketing-sales-analytics",  # GitHub Pages with path
     os.getenv("FRONTEND_URL", ""),  # Add your production frontend URL
 ]
 

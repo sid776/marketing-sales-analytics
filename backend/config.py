@@ -20,6 +20,8 @@ class Settings:
         "http://localhost:5173",
         "http://127.0.0.1:3000",
         "http://127.0.0.1:5173",
+        "https://sid776.github.io",  # GitHub Pages
+        "https://sid776.github.io/marketing-sales-analytics",  # GitHub Pages with path
     ]
     
     # File Upload Settings
