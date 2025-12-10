@@ -34,15 +34,24 @@ export default function Home() {
       })
 
       if (!response.ok) {
-        throw new Error('Analysis failed')
+        const errorText = await response.text()
+        let errorMessage = 'Analysis failed'
+        try {
+          const errorJson = JSON.parse(errorText)
+          errorMessage = errorJson.detail || errorMessage
+        } catch {
+          errorMessage = errorText || errorMessage
+        }
+        throw new Error(errorMessage)
       }
 
       const results = await response.json()
       setAnalysisResults(results)
       setIsProcessing(false)
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error analyzing file:', error)
-      alert(`Failed to analyze file. Make sure the Python backend is running on ${API_URL}`)
+      const errorMessage = error?.message || `Failed to connect to backend at ${API_URL}`
+      alert(`Error: ${errorMessage}\n\nMake sure the Python backend is running and accessible.`)
       setIsProcessing(false)
     }
   }

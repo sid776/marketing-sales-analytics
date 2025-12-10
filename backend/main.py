@@ -21,21 +21,20 @@ cors_origins = [
     "http://localhost:3000",
     "http://localhost:5173",
     "https://sid776.github.io",  # GitHub Pages
-<<<<<<< HEAD
     "https://sid776.github.io/marketing-sales-analytics",  # GitHub Pages with path
-    os.getenv("FRONTEND_URL", ""),  # Add your production frontend URL
-=======
     os.getenv("FRONTEND_URL", ""),  # Add your production frontend URL from environment
->>>>>>> 352258cc30ca1ff501036c3a0bda0e8debfe3955
 ]
 
-# Allow all Amplify domains (using regex)
-cors_origin_regex = r"https://.*\.amplifyapp\.com"
+# Allow all GitHub Pages and Amplify domains (using regex)
+cors_origin_regex = [
+    r"https://.*\.github\.io",  # Allow all GitHub Pages subdomains
+    r"https://.*\.amplifyapp\.com",  # Allow all Amplify subdomains
+]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[origin for origin in cors_origins if origin],  # Filter out empty strings
-    allow_origin_regex=cors_origin_regex,  # Allow all Amplify subdomains
+    allow_origin_regex="|".join(cors_origin_regex),  # Allow GitHub Pages and Amplify subdomains
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -56,19 +55,33 @@ async def health():
 @app.post("/api/analyze")
 async def analyze_file(file: UploadFile = File(...)):
     try:
+        if not file.filename:
+            raise HTTPException(status_code=400, detail="No file provided")
+        
         contents = await file.read()
-        if file.filename.endswith('.csv'):
+        if not contents:
+            raise HTTPException(status_code=400, detail="File is empty")
+        
+        # Check file extension
+        filename_lower = file.filename.lower()
+        if filename_lower.endswith('.csv'):
             df = pd.read_csv(io.BytesIO(contents))
-        elif file.filename.endswith(('.xlsx', '.xls')):
+        elif filename_lower.endswith(('.xlsx', '.xls')):
             df = pd.read_excel(io.BytesIO(contents))
         else:
-            raise HTTPException(status_code=400, detail="Unsupported file type")
+            raise HTTPException(status_code=400, detail="Unsupported file type. Please upload CSV or Excel files (.csv, .xlsx, .xls)")
+        
         if df.empty:
-            raise HTTPException(status_code=400, detail="File is empty")
-        data = df.to_dict('records')
+            raise HTTPException(status_code=400, detail="File contains no data")
+        
+        if len(df.columns) == 0:
+            raise HTTPException(status_code=400, detail="File has no columns")
+        
+        # Perform analysis
         ml_results = ml_analyzer.analyze(df)
         dl_results = dl_analyzer.analyze(df)
         quantum_results = quantum_analyzer.analyze(df)
+        
         response = {
             "ml": ml_results,
             "dl": dl_results,
@@ -81,8 +94,14 @@ async def analyze_file(file: UploadFile = File(...)):
             }
         }
         return JSONResponse(content=response)
+    except HTTPException:
+        raise
+    except pd.errors.EmptyDataError:
+        raise HTTPException(status_code=400, detail="File is empty or corrupted")
+    except pd.errors.ParserError as e:
+        raise HTTPException(status_code=400, detail=f"Error parsing file: {str(e)}")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
 
 @app.get("/api/sample-data")
 async def get_sample_data():
