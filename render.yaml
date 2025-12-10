@@ -8,6 +8,8 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
+      - key: FRONTEND_URL
+        value: https://sid776.github.io/marketing-sales-analytics
     healthCheckPath: /health
 
   # Next.js Frontend
